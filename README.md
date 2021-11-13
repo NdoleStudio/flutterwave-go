@@ -29,7 +29,7 @@ import "github.com/NdoleStudio/flutterwave-go"
 
 - [BILLS](#bills)
     - `POST /bills/`: Create a bill payment
-    - `GET /bill-items/{item_code}/validate`: validate services like DSTV smartcard number, Meter number etc.
+    - `GET /bill-items/{item_code}/validate`: Validate services like DSTV smartcard number, Meter number etc.
 
 ## Usage
 
