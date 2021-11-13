@@ -27,18 +27,15 @@ import "github.com/NdoleStudio/flutterwave-go"
 
 ## Implemented
 
-- [Token](#token)
-    - `POST /token` - Get access token
-- [Collect](#collect)
-    - `POST /collect` - Request Payment
-- [Transaction](#transaction)
-    - `POST /transaction/(reference)/` - Transaction Status
+- [BILLS](#bills)
+    - `POST /bills/`: Create a bill payment
+    - `GET /bill-items/{item_code}/validate`: validate services like DSTV smartcard number, Meter number etc.
 
 ## Usage
 
 ### Initializing the Client
 
-An instance of the `campay` client can be created using `New()`.  The `http.Client` supplied will be used to make requests to the API.
+An instance of the `flutterwave` client can be created using `New()`.
 
 ```go
 package main
@@ -59,7 +56,7 @@ func main()  {
 All API calls return an `error` as the last return object. All successful calls will return a `nil` error.
 
 ```go
-data, httpResponse, err := campayClient.Bills.Create(context.Background(), request)
+data, httpResponse, err := flutterwaveClient.Bills.Create(context.Background(), request)
 if err != nil {
     //handle error
 }
@@ -72,7 +69,30 @@ if err != nil {
 `POST /bills/`: Create a bill payment
 
 ```go
-response, _, err := flutterwaveClient.Bills.Create(context.Background(), request)
+response, _, err := flutterwaveClient.Bills.CreatePayment(context.Background(), &BillsCreatePaymentRequest{
+    Country:    "NG",
+    Customer:   "7034504232",
+    Amount:     100,
+    Recurrence: "ONCE",
+    Type:       "DSTV",
+    Reference:  uuid.New().String(),
+    BillerName: "DSTV",
+})
+
+if err != nil {
+    log.Fatal(err)
+}
+
+log.Println(response.Status) // success
+```
+
+
+#### Create a bill payment
+
+`GET /bill-items/{item_code}/validate`: validate services like DSTV smartcard number, Meter number etc.
+
+```go
+response, _, err := flutterwaveClient.Bills.Validate(context.Background(), "CB177", "BIL099", "08038291822")
 
 if err != nil {
     log.Fatal(err)

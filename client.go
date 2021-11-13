@@ -21,6 +21,8 @@ type Client struct {
 	common     service
 	secretKey  string
 	baseURL    string
+
+	Bills *billsService
 }
 
 // New creates and returns a new campay.Client from a slice of campay.ClientOption.
@@ -38,6 +40,7 @@ func New(options ...ClientOption) *Client {
 	}
 
 	client.common.client = client
+	client.Bills = (*billsService)(&client.common)
 	return client
 }
 
@@ -65,6 +68,16 @@ func (client *Client) newRequest(ctx context.Context, method, uri string, body i
 	req.Header.Set("Authorization", "Bearer "+client.secretKey)
 
 	return req, nil
+}
+
+// addURLParams adds urls parameters to an *http.Request
+func (client *Client) addURLParams(request *http.Request, params map[string]string) *http.Request {
+	q := request.URL.Query()
+	for key, value := range params {
+		q.Add(key, value)
+	}
+	request.URL.RawQuery = q.Encode()
+	return request
 }
 
 // do carries out an HTTP request and returns a Response

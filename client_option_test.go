@@ -9,6 +9,9 @@ import (
 
 func TestWithHTTPClient(t *testing.T) {
 	t.Run("httpClient is not set when the httpClient is nil", func(t *testing.T) {
+		// Setup
+		t.Parallel()
+
 		// Arrange
 		config := defaultClientConfig()
 
@@ -20,6 +23,9 @@ func TestWithHTTPClient(t *testing.T) {
 	})
 
 	t.Run("httpClient is set when the httpClient is not nil", func(t *testing.T) {
+		// Setup
+		t.Parallel()
+
 		// Arrange
 		config := defaultClientConfig()
 		newClient := &http.Client{Timeout: 300}
@@ -35,6 +41,9 @@ func TestWithHTTPClient(t *testing.T) {
 
 func TestWithBaseURL(t *testing.T) {
 	t.Run("baseURL is set successfully", func(t *testing.T) {
+		// Setup
+		t.Parallel()
+
 		// Arrange
 		baseURL := "https://example.com"
 		config := defaultClientConfig()
@@ -47,6 +56,9 @@ func TestWithBaseURL(t *testing.T) {
 	})
 
 	t.Run("tailing / is trimmed from baseURL", func(t *testing.T) {
+		// Setup
+		t.Parallel()
+
 		// Arrange
 		baseURL := "https://example.com/"
 		config := defaultClientConfig()
@@ -61,6 +73,9 @@ func TestWithBaseURL(t *testing.T) {
 
 func TestWithSecretKey(t *testing.T) {
 	t.Run("secretKey is set successfully", func(t *testing.T) {
+		// Setup
+		t.Parallel()
+
 		// Arrange
 		config := defaultClientConfig()
 		secretKey := "secretKey"
