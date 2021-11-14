@@ -30,6 +30,7 @@ import "github.com/NdoleStudio/flutterwave-go"
 - [BILLS](#bills)
     - `POST /bills/`: Create a bill payment
     - `GET /bill-items/{item_code}/validate`: Validate services like DSTV smartcard number, Meter number etc.
+    - `GET /bills/{reference}`: Get the verbose status of a bill payment
 
 ## Usage
 
@@ -101,6 +102,19 @@ if err != nil {
 log.Println(response.Status) // success
 ```
 
+#### Get verbose status of a bill payment
+
+`GET /bills/{reference}`: get the verbose status of a bill purchase
+
+```go
+response, _, err := flutterwaveClient.Bills.GetStatusVerbose(context.Background(), "9300049404444")
+
+if err != nil {
+    log.Fatal(err)
+}
+
+log.Println(response.Status) // success
+```
 
 ## Testing
 

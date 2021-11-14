@@ -39,3 +39,28 @@ func BillsValidateDstvResponse() string {
 	}
 `
 }
+
+// BillsGetStatusVerboseResponse is a dummy response of a verbose bill status
+func BillsGetStatusVerboseResponse() string {
+	return `
+	{
+		"status": "success",
+		"message": "Bill status fetch successful",
+		"data": {
+			"currency": "NGN",
+			"customer_id": "+23490803840303",
+			"frequency": "One Time",
+			"amount": "500.0000",
+			"product": "AIRTIME",
+			"product_name": "9MOBILE",
+			"commission": 10,
+			"transaction_date": "2020-03-11T20:19:21.27Z",
+			"country": "NG",
+			"tx_ref": "CF-FLYAPI-20200311081921359990",
+			"extra": null,
+			"product_details": "FLY-API-NG-AIRTIME-9MOBILE",
+			"status": "successful"
+		}
+	}
+`
+}

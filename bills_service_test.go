@@ -4,9 +4,11 @@ import (
 	"context"
 	"net/http"
 	"testing"
+	"time"
 
 	"github.com/NdoleStudio/flutterwave-go/internal/helpers"
 	"github.com/NdoleStudio/flutterwave-go/internal/stubs"
+	"github.com/araddon/dateparse"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 )
@@ -52,6 +54,7 @@ func TestBillsService_CreatePayment(t *testing.T) {
 	}, data)
 
 	assert.Equal(t, http.StatusOK, response.HTTPResponse.StatusCode)
+	assert.True(t, data.IsSuccessfull())
 
 	// Teardown
 	server.Close()
@@ -102,6 +105,65 @@ func TestBillsService_Validate(t *testing.T) {
 	}, data)
 
 	assert.Equal(t, http.StatusOK, response.HTTPResponse.StatusCode)
+	assert.True(t, data.IsSuccessfull())
+
+	// Teardown
+	server.Close()
+}
+
+func TestBillsService_GetStatusVerbose(t *testing.T) {
+	// Setup
+	t.Parallel()
+
+	// Arrange
+	server := helpers.MakeTestServer(http.StatusOK, stubs.BillsGetStatusVerboseResponse())
+	client := New(WithBaseURL(server.URL))
+
+	// Act
+	data, response, err := client.Bills.GetStatusVerbose(context.Background(), "9300049404444")
+
+	// Assert
+	assert.Nil(t, err)
+
+	transactionDate, err := dateparse.ParseAny("2020-03-11T20:19:21.27Z")
+	assert.Nil(t, err)
+
+	assert.Equal(t, &BillsStatusVerboseResponse{
+		Status:  "success",
+		Message: "Bill status fetch successful",
+		Data: struct {
+			Currency        string      `json:"currency"`
+			CustomerID      string      `json:"customer_id"`
+			Frequency       string      `json:"frequency"`
+			Amount          string      `json:"amount"`
+			Product         string      `json:"product"`
+			ProductName     string      `json:"product_name"`
+			Commission      int         `json:"commission"`
+			TransactionDate time.Time   `json:"transaction_date"`
+			Country         string      `json:"country"`
+			TxRef           string      `json:"tx_ref"`
+			Extra           interface{} `json:"extra"`
+			ProductDetails  string      `json:"product_details"`
+			Status          string      `json:"status"`
+		}{
+			"NGN",
+			"+23490803840303",
+			"One Time",
+			"500.0000",
+			"AIRTIME",
+			"9MOBILE",
+			10,
+			transactionDate,
+			"NG",
+			"CF-FLYAPI-20200311081921359990",
+			nil,
+			"FLY-API-NG-AIRTIME-9MOBILE",
+			"successful",
+		},
+	}, data)
+
+	assert.Equal(t, http.StatusOK, response.HTTPResponse.StatusCode)
+	assert.True(t, data.IsSuccessfull())
 
 	// Teardown
 	server.Close()

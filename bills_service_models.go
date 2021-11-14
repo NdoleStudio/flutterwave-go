@@ -1,5 +1,7 @@
 package flutterwave
 
+import "time"
+
 // BillsCreatePaymentRequest is data needed to creat a payment
 type BillsCreatePaymentRequest struct {
 	Country    string `json:"country"`
@@ -24,6 +26,11 @@ type BillsCreatePaymentResponse struct {
 	} `json:"data"`
 }
 
+// IsSuccessfull determines if the bill payment was successfull
+func (response BillsCreatePaymentResponse) IsSuccessfull() bool {
+	return response.Status == "success" && response.Data.TxRef != ""
+}
+
 // BillsValidateResponse is the response after validating a bill service
 type BillsValidateResponse struct {
 	Status  string `json:"status"`
@@ -41,4 +48,35 @@ type BillsValidateResponse struct {
 		Maximum         int         `json:"maximum"`
 		Minimum         int         `json:"minimum"`
 	} `json:"data"`
+}
+
+// IsSuccessfull determines if the bill validation was successfull
+func (response BillsValidateResponse) IsSuccessfull() bool {
+	return response.Status == "success" && response.Data.Customer != ""
+}
+
+// BillsStatusVerboseResponse is the verbose response of a bill payment
+type BillsStatusVerboseResponse struct {
+	Status  string `json:"status"`
+	Message string `json:"message"`
+	Data    struct {
+		Currency        string      `json:"currency"`
+		CustomerID      string      `json:"customer_id"`
+		Frequency       string      `json:"frequency"`
+		Amount          string      `json:"amount"`
+		Product         string      `json:"product"`
+		ProductName     string      `json:"product_name"`
+		Commission      int         `json:"commission"`
+		TransactionDate time.Time   `json:"transaction_date"`
+		Country         string      `json:"country"`
+		TxRef           string      `json:"tx_ref"`
+		Extra           interface{} `json:"extra"`
+		ProductDetails  string      `json:"product_details"`
+		Status          string      `json:"status"`
+	} `json:"data"`
+}
+
+// IsSuccessfull determines if the transaction was successfull
+func (response BillsStatusVerboseResponse) IsSuccessfull() bool {
+	return response.Data.Status == "successful" && response.Data.TxRef != ""
 }
