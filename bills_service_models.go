@@ -28,7 +28,7 @@ type BillsCreatePaymentResponse struct {
 
 // IsSuccessfull determines if the bill payment was successfull
 func (response BillsCreatePaymentResponse) IsSuccessfull() bool {
-	return response.Status == "success" && response.Data.TxRef != ""
+	return response.Status == "success" && response.Data.FlwRef != ""
 }
 
 // BillsValidateResponse is the response after validating a bill service
