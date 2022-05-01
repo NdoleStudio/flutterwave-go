@@ -22,8 +22,9 @@ type Client struct {
 	secretKey  string
 	baseURL    string
 
-	Bills   *billsService
-	Payment *paymentsService
+	Bills        *billsService
+	Payments     *paymentsService
+	Transactions *transactionsService
 }
 
 // New creates and returns a new flutterwave.Client from a slice of flutterwave.ClientOption.
@@ -42,7 +43,8 @@ func New(options ...ClientOption) *Client {
 
 	client.common.client = client
 	client.Bills = (*billsService)(&client.common)
-	client.Payment = (*paymentsService)(&client.common)
+	client.Payments = (*paymentsService)(&client.common)
+	client.Transactions = (*transactionsService)(&client.common)
 	return client
 }
 
