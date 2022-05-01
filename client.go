@@ -14,7 +14,7 @@ type service struct {
 	client *Client
 }
 
-// Client is the campay API client.
+// Client is the flutterwave API client.
 // Do not instantiate this client with Client{}. Use the New method instead.
 type Client struct {
 	httpClient *http.Client
@@ -22,10 +22,11 @@ type Client struct {
 	secretKey  string
 	baseURL    string
 
-	Bills *billsService
+	Bills   *billsService
+	Payment *paymentsService
 }
 
-// New creates and returns a new campay.Client from a slice of campay.ClientOption.
+// New creates and returns a new flutterwave.Client from a slice of flutterwave.ClientOption.
 func New(options ...ClientOption) *Client {
 	config := defaultClientConfig()
 
@@ -41,6 +42,7 @@ func New(options ...ClientOption) *Client {
 
 	client.common.client = client
 	client.Bills = (*billsService)(&client.common)
+	client.Payment = (*paymentsService)(&client.common)
 	return client
 }
 

@@ -31,7 +31,7 @@ func (service *billsService) CreatePayment(ctx context.Context, payload *BillsCr
 	return &data, response, nil
 }
 
-// Validate validates services like DSTV smartcard number, Meter number etc.
+// Validate validates services like DStv smartcard number, Meter number etc.
 //
 // API Docs: https://developer.flutterwave.com/reference/validate-bill-service
 func (service *billsService) Validate(ctx context.Context, itemCode string, billerCode string, customer string) (*BillsValidateResponse, *Response, error) {

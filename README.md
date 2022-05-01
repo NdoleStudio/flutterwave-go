@@ -27,7 +27,7 @@ import "github.com/NdoleStudio/flutterwave-go"
 
 ## Implemented
 
-- [BILLS](#bills)
+- [Status Codes](#bills)
     - `POST /bills/`: Create a bill payment
     - `GET /bill-items/{item_code}/validate`: Validate services like DSTV smartcard number, Meter number etc.
     - `GET /bills/{reference}`: Get the verbose status of a bill payment

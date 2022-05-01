@@ -27,9 +27,9 @@ func TestBillsService_CreatePayment(t *testing.T) {
 		Customer:   "7034504232",
 		Amount:     100,
 		Recurrence: "ONCE",
-		Type:       "DSTV",
+		Type:       "DStv",
 		Reference:  uuid.New().String(),
-		BillerName: "DSTV",
+		BillerName: "DStv",
 	})
 
 	// Assert
