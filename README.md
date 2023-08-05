@@ -29,8 +29,8 @@ import "github.com/NdoleStudio/flutterwave-go"
 
 - **[Bills](#bills)**
   - `POST /bills/`: Create a bill payment
-  - `GET /bill-items/{item_code}/validate`: Validate services like DStv smartcard number, Meter number etc.
-  - `GET /bills/{reference}`: Get the verbose status of a bill payment
+  - `GET /bill-items/:item_code/validate`: Validate services like DStv smartcard number, Meter number etc.
+  - `GET /bills/:reference`: Get the verbose status of a bill payment
 - **Payments**
   - `GET /v3/transactions/:id/verify`: Verify a transaction
   - `POST /v3/transactions/:id/refund`: Create a Refund
