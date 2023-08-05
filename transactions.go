@@ -44,3 +44,23 @@ type TransactionResponse struct {
 		} `json:"customer"`
 	} `json:"data"`
 }
+
+// RefundTransactionResponse is the payload generated when a transaction is refunded
+type RefundTransactionResponse struct {
+	Status  string `json:"status"`
+	Message string `json:"message"`
+	Data    struct {
+		ID             int    `json:"id"`
+		AccountID      int    `json:"account_id"`
+		TxID           int    `json:"tx_id"`
+		FlwRef         string `json:"flw_ref"`
+		WalletID       int    `json:"wallet_id"`
+		AmountRefunded int    `json:"amount_refunded"`
+		Status         string `json:"status"`
+		Destination    string `json:"destination"`
+		Meta           struct {
+			Source string `json:"source"`
+		} `json:"meta"`
+		CreatedAt time.Time `json:"created_at"`
+	} `json:"data"`
+}

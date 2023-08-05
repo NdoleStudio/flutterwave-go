@@ -33,3 +33,27 @@ func (service *transactionsService) Verify(ctx context.Context, transactionID in
 
 	return &data, response, nil
 }
+
+// Refund a transaction
+//
+// API Docs: https://developer.flutterwave.com/reference/endpoints/transactions/#create-a-refund
+func (service *transactionsService) Refund(ctx context.Context, transactionID int64, amount int32) (*RefundTransactionResponse, *Response, error) {
+	uri := fmt.Sprintf("/v3/transactions/%d/refund", transactionID)
+
+	request, err := service.client.newRequest(ctx, http.MethodPost, uri, map[string]int32{"amount": amount})
+	if err != nil {
+		return nil, nil, err
+	}
+
+	response, err := service.client.do(request)
+	if err != nil {
+		return nil, response, err
+	}
+
+	var data RefundTransactionResponse
+	if err = json.Unmarshal(*response.Body, &data); err != nil {
+		return nil, response, err
+	}
+
+	return &data, response, nil
+}

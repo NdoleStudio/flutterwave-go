@@ -64,3 +64,27 @@ func BillsGetStatusVerboseResponse() string {
 	}
 `
 }
+
+// TransactionRefundResponse is a dummy response for refunding a transaction
+func TransactionRefundResponse() []byte {
+	return []byte(`
+{
+  "status": "success",
+  "message": "Transaction refund initiated",
+  "data": {
+    "id": 75923,
+    "account_id": 73362,
+    "tx_id": 908790,
+    "flw_ref": "URF_1577867664541_3572735",
+    "wallet_id": 74639,
+    "amount_refunded": 6900,
+    "status": "completed",
+    "destination": "payment_source",
+    "meta": {
+      "source": "availablebalance"
+    },
+    "created_at": "2021-01-24T09:18:37.366Z"
+  }
+}
+`)
+}
