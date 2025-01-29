@@ -24,6 +24,7 @@ type Client struct {
 	Bills        *billsService
 	Payments     *paymentsService
 	Transactions *transactionsService
+	Transfers *transfersService
 }
 
 // New creates and returns a new flutterwave.Client from a slice of flutterwave.ClientOption.
@@ -44,6 +45,7 @@ func New(options ...ClientOption) *Client {
 	client.Bills = (*billsService)(&client.common)
 	client.Payments = (*paymentsService)(&client.common)
 	client.Transactions = (*transactionsService)(&client.common)
+	client.Transfers = (*transfersService)(&client.common)
 	return client
 }
 
