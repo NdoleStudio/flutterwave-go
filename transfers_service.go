@@ -13,7 +13,7 @@ type transfersService service
 // Estimate the Transfer Rate of a transaction
 //
 // API Docs: https://developer.flutterwave.com/reference/check-transfer-rates
-func (service *transfersService) Query(ctx context.Context, amount int, destination_currency, source_currency string) (*TransferRateResponse, *Response, error) {
+func (service *transfersService) Rate(ctx context.Context, amount int, destination_currency, source_currency string) (*TransferRateResponse, *Response, error) {
 	uri := "/v3/transfers/rates"
 
 	request, err := service.client.newRequest(ctx, http.MethodGet, uri, nil)

@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-func TestTransfersService_Query(t *testing.T) {
+func TestTransfersService_Rate(t *testing.T) {
 	// Setup
 	t.Parallel()
 
@@ -18,7 +18,7 @@ func TestTransfersService_Query(t *testing.T) {
 	client := New(WithBaseURL(server.URL))
 
 	// Act
-	rate, response, err := client.Transfers.Query(context.Background(), 1000, "USD", "NGN")
+	rate, response, err := client.Transfers.Rate(context.Background(), 1000, "USD", "NGN")
 
 	// Assert
 	assert.Nil(t, err)
@@ -31,7 +31,7 @@ func TestTransfersService_Query(t *testing.T) {
 	server.Close()
 }
 
-func TestTransfersService_Query_Failure(t *testing.T) {
+func TestTransfersService_Rate_Failure(t *testing.T) {
 	// Setup
 	t.Parallel()
 
@@ -40,7 +40,7 @@ func TestTransfersService_Query_Failure(t *testing.T) {
 	client := New(WithBaseURL(server.URL))
 
 	// Act
-	rate, response, err := client.Transfers.Query(context.Background(), 1000, "USD", "NGN")
+	rate, response, err := client.Transfers.Rate(context.Background(), 1000, "USD", "NGN")
 
 	// Assert
 	assert.NotNil(t, err) // Expect an error
