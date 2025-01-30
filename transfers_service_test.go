@@ -18,13 +18,35 @@ func TestTransfersService_Query(t *testing.T) {
 	client := New(WithBaseURL(server.URL))
 
 	// Act
-	_, response, err := client.Transfers.Query(context.Background(), 1000, "USD", "NGN")
+	rate, response, err := client.Transfers.Query(context.Background(), 1000, "USD", "NGN")
 
 	// Assert
 	assert.Nil(t, err)
 
 	assert.Equal(t, http.StatusOK, response.HTTPResponse.StatusCode)
 	assert.Equal(t, stubs.TransferRateResponse(), *response.Body)
+	assert.Equal(t, 624240, rate.Data.Source.Amount)
+
+	// Teardown
+	server.Close()
+}
+
+func TestTransfersService_Query_Failure(t *testing.T) {
+	// Setup
+	t.Parallel()
+
+	// Arrange
+	server := helpers.MakeTestServer(http.StatusInternalServerError, `{"error": "internal server error"}`)
+	client := New(WithBaseURL(server.URL))
+
+	// Act
+	rate, response, err := client.Transfers.Query(context.Background(), 1000, "USD", "NGN")
+
+	// Assert
+	assert.NotNil(t, err) // Expect an error
+	assert.Nil(t, rate)   // The rate should be nil due to failure
+	assert.Equal(t, http.StatusInternalServerError, response.HTTPResponse.StatusCode)
+	assert.Contains(t, err.Error(), "500") // Ensure error message contains 500
 
 	// Teardown
 	server.Close()

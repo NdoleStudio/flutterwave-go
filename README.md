@@ -34,6 +34,8 @@ import "github.com/NdoleStudio/flutterwave-go"
 - **Payments**
   - `GET /v3/transactions/:id/verify`: Verify a transaction
   - `POST /v3/transactions/:id/refund`: Create a Refund
+- **Transfers**
+  - `GET /v3/transfers/rates`: Get the transfer rate of a transaction
 
 ## Usage
 
