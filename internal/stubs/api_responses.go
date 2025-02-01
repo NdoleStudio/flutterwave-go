@@ -88,3 +88,24 @@ func TransactionRefundResponse() []byte {
 }
 `)
 }
+
+// TransferRatesResponse is a dummy response for fetching the tranfer rate of a given transaction.
+func TransferRateResponse() []byte {
+	return []byte(`
+	{
+  "status": "success",
+  "message": "Transfer amount fetched",
+  "data": {
+    "rate": 624.24,
+    "source": {
+      "currency": "NGN",
+      "amount": 624240
+    },
+    "destination": {
+      "currency": "USD",
+      "amount": 1000
+    }
+  }
+}
+	`)
+}
