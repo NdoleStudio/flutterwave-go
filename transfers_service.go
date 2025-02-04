@@ -3,12 +3,21 @@ package flutterwave
 import (
 	"context"
 	"encoding/json"
+	"errors"
+	"fmt"
 	"net/http"
 	"strconv"
 )
 
 // transfersService is the API client for the `/v3/transfers` endpoint
 type transfersService service
+
+var (
+	ErrCouldNotConstructNewRequest = errors.New("could not construct new request")
+	ErrRequestFailure  = errors.New("request failed")
+	ErrUnmarshalFailure = errors.New("failed to unmarshal response")
+)
+
 
 // Estimate the Transfer Rate of a transaction
 //
@@ -18,7 +27,7 @@ func (service *transfersService) Rate(ctx context.Context, amount int, destinati
 
 	request, err := service.client.newRequest(ctx, http.MethodGet, uri, nil)
 	if err != nil {
-		return nil, nil, err
+		return nil, nil, fmt.Errorf("%w: %v", ErrCouldNotConstructNewRequest, err)
 	}
 
 	// Adding the parameters
@@ -30,12 +39,12 @@ func (service *transfersService) Rate(ctx context.Context, amount int, destinati
 
 	response, err := service.client.do(requestWithParams)
 	if err != nil {
-		return nil, response, err
+		return nil, response, fmt.Errorf("%w: %v", ErrRequestFailure, err)
 	}
 
 	var data TransferRateResponse
 	if err = json.Unmarshal(*response.Body, &data); err != nil {
-		return nil, response, err
+		return nil, response, fmt.Errorf("%w: %v", ErrUnmarshalFailure, err)
 	}
 
 	return &data, response, nil
