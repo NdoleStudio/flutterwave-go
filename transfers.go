@@ -14,5 +14,5 @@ type TransferRateResponse struct {
 // Payment is data returned for either the source or the destination.
 type Payment struct {
 	Currency string `json:"currency"`
-	Amount   int    `json:"amount"`
+	Amount   float64    `json:"amount"`
 }
