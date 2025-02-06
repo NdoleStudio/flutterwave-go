@@ -1,5 +1,7 @@
 package flutterwave
 
+import "encoding/json"
+
 // ExchangeRateResponse is data returned when querying a transaction.
 type TransferRateResponse struct {
 	Status  string `json:"status"`
@@ -14,5 +16,5 @@ type TransferRateResponse struct {
 // Payment is data returned for either the source or the destination.
 type Payment struct {
 	Currency string `json:"currency"`
-	Amount   string `json:"amount"`
+	Amount   json.Number `json:"amount"`
 }
