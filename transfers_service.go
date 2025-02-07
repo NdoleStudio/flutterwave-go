@@ -3,7 +3,6 @@ package flutterwave
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -11,13 +10,6 @@ import (
 
 // transfersService is the API client for the `/v3/transfers` endpoint
 type transfersService service
-
-var (
-	ErrCouldNotConstructNewRequest = errors.New("could not construct new request")
-	ErrRequestFailure  = errors.New("request failed")
-	ErrUnmarshalFailure = errors.New("failed to unmarshal response")
-)
-
 
 // Estimate the Transfer Rate of a transaction
 //
