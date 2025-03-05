@@ -4,9 +4,17 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
+)
+
+// Pre-defined error messages to be shared across services.
+var (
+	ErrCouldNotConstructNewRequest = errors.New("could not construct new request")
+	ErrRequestFailure  = errors.New("request failed")
+	ErrUnmarshalFailure = errors.New("failed to unmarshal response")
 )
 
 type service struct {

@@ -3,6 +3,7 @@ package flutterwave
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"net/http"
 	"strconv"
 )
@@ -18,7 +19,7 @@ func (service *transfersService) Rate(ctx context.Context, amount int, destinati
 
 	request, err := service.client.newRequest(ctx, http.MethodGet, uri, nil)
 	if err != nil {
-		return nil, nil, err
+		return nil, nil, errors.Join(ErrCouldNotConstructNewRequest, err)
 	}
 
 	// Adding the parameters
@@ -30,12 +31,12 @@ func (service *transfersService) Rate(ctx context.Context, amount int, destinati
 
 	response, err := service.client.do(requestWithParams)
 	if err != nil {
-		return nil, response, err
+		return nil, response, errors.Join(ErrRequestFailure, err)
 	}
 
 	var data TransferRateResponse
 	if err = json.Unmarshal(*response.Body, &data); err != nil {
-		return nil, response, err
+		return nil, response, errors.Join(ErrUnmarshalFailure, err)
 	}
 
 	return &data, response, nil
